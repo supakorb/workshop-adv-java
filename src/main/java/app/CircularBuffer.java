@@ -18,10 +18,21 @@ public class CircularBuffer {
 		array = new String[capacity];
 	}
 
-	public void write(String element) throws Exception {
+	public void write(String element) {
+		if (size + 1 == capacity) {
+			throw new RuntimeException("Full Buffer Exception");
+		}
+		int index = (writePointer + 1) % capacity;
+		array[index] = element;
+		writePointer();
+	}
+	
+	public void writePointer() {
+		writePointer++;
+		size++;
 	}
 
-	public String read() throws Exception {
+	public String read() {
 		return null;
 	}
 
@@ -39,7 +50,14 @@ public class CircularBuffer {
 
 	public static void main(String[] args) {
 		CircularBuffer circular = new CircularBuffer();
-		circular.create();
-		System.out.println(circular.getSize());
+		try {
+			circular.create();
+			circular.write("A");
+			System.out.println("size: " + circular.getSize());
+			circular.write("B");
+			System.out.println("size: " + circular.getSize());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
