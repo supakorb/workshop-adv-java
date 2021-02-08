@@ -8,7 +8,7 @@ public class CircularBuffer {
 	private int size = 0;
 	private int readPointer = 0;
 	private int writePointer = -1;
-	private String[] array;
+	private String[] buffer;
 
 	public void create() {
 		create(DEFAULT_CAPACITY);
@@ -16,24 +16,24 @@ public class CircularBuffer {
 
 	public void create(int capacity) {
 		this.capacity = capacity;
-		array = new String[capacity];
+		buffer = new String[capacity];
 	}
 
 	public void write(String element) {
-		if (size == capacity) {
+		if (isFull()) {
 			throw new RuntimeException("Full Buffer Exception");
 		}
 		int index = (writePointer + 1) % capacity;
-		array[index] = element;
+		buffer[index] = element;
 		writePointer();
 	}
 
 	public String read() {
-		if (size == 0) {
+		if (isEmpty()) {
 			throw new RuntimeException("Empty Buffer Exception");
 		}
 		int index = readPointer % capacity;
-		String element = array[index];
+		String element = buffer[index];
 		readPointer();
 		return element;
 	}
