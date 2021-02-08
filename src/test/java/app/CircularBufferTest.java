@@ -23,6 +23,15 @@ public class CircularBufferTest {
 	}
 	
 	@Test
+	public void write_A_B() {
+		CircularBuffer circular = new CircularBuffer();
+		circular.create();
+		circular.write("A");
+		circular.write("B");
+		assertEquals(2, circular.getSize());
+	}
+	
+	@Test
 	public void create_buffer_with_2_capacity_and_write_A_B_then_buffer_is_full() {
 		CircularBuffer circular = new CircularBuffer();
 		circular.create(2);
