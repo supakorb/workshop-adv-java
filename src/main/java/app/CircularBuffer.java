@@ -2,6 +2,8 @@ package app;
 
 public class CircularBuffer {
 
+	private static final int DEFAULT_CAPACITY = 10;
+	
 	private int capacity = 0;
 	private int size = 0;
 	private int readPointer = 0;
@@ -9,8 +11,7 @@ public class CircularBuffer {
 	private String[] array;
 
 	public void create() {
-		this.capacity = 10;
-		array = new String[capacity];
+		create(DEFAULT_CAPACITY);
 	}
 
 	public void create(int capacity) {
@@ -26,11 +27,6 @@ public class CircularBuffer {
 		array[index] = element;
 		writePointer();
 	}
-	
-	public void writePointer() {
-		writePointer++;
-		size++;
-	}
 
 	public String read() {
 		if (size == 0) {
@@ -40,11 +36,6 @@ public class CircularBuffer {
 		String element = array[index];
 		readPointer();
 		return element;
-	}
-	
-	public void readPointer() {
-		readPointer++; 
-		size--;
 	}
 
 	public boolean isEmpty() {
@@ -58,32 +49,14 @@ public class CircularBuffer {
 	public boolean isFull() {
 		return size == capacity;
 	}
-
-	public static void main(String[] args) {
-		CircularBuffer circular;
-		try {
-//			circular.create();
-//			circular.write("A");
-//			System.out.println("size: " + circular.getSize());
-//			circular.write("B");
-//			System.out.println("size: " + circular.getSize());
-			
-			// Full Buffer Exception
-//			circular = new CircularBuffer();
-//			circular.create(2);
-//			circular.write("A");
-//			circular.write("B");
-//			circular.write("C");
-			
-			circular = new CircularBuffer();
-			circular.create(2);
-			circular.write("A");
-			circular.write("B");
-			System.out.println("size: " + circular.getSize());
-			System.out.println(circular.read());
-			System.out.println("size: " + circular.getSize());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+	
+	private void writePointer() {
+		writePointer++;
+		size++;
+	}
+	
+	private void readPointer() {
+		readPointer++; 
+		size--;
 	}
 }
