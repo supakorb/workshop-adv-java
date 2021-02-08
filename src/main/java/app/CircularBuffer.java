@@ -19,7 +19,7 @@ public class CircularBuffer {
 	}
 
 	public void write(String element) {
-		if (size + 1 == capacity) {
+		if (size == capacity) {
 			throw new RuntimeException("Full Buffer Exception");
 		}
 		int index = (writePointer + 1) % capacity;
@@ -33,7 +33,18 @@ public class CircularBuffer {
 	}
 
 	public String read() {
-		return null;
+		if (size == 0) {
+			throw new RuntimeException("Empty Buffer Exception");
+		}
+		int index = readPointer % capacity;
+		String element = array[index];
+		readPointer();
+		return element;
+	}
+	
+	public void readPointer() {
+		readPointer++; 
+		size--;
 	}
 
 	public boolean isEmpty() {
@@ -49,12 +60,27 @@ public class CircularBuffer {
 	}
 
 	public static void main(String[] args) {
-		CircularBuffer circular = new CircularBuffer();
+		CircularBuffer circular;
 		try {
-			circular.create();
+//			circular.create();
+//			circular.write("A");
+//			System.out.println("size: " + circular.getSize());
+//			circular.write("B");
+//			System.out.println("size: " + circular.getSize());
+			
+			// Full Buffer Exception
+//			circular = new CircularBuffer();
+//			circular.create(2);
+//			circular.write("A");
+//			circular.write("B");
+//			circular.write("C");
+			
+			circular = new CircularBuffer();
+			circular.create(2);
 			circular.write("A");
-			System.out.println("size: " + circular.getSize());
 			circular.write("B");
+			System.out.println("size: " + circular.getSize());
+			System.out.println(circular.read());
 			System.out.println("size: " + circular.getSize());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
