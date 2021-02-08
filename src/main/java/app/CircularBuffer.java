@@ -45,6 +45,10 @@ public class CircularBuffer {
 	public int getSize() {
 		return size;
 	}
+	
+	public int getCapacity() {
+		return capacity;
+	}
 
 	public boolean isFull() {
 		return size == capacity;
